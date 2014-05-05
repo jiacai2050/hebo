@@ -18,7 +18,6 @@
             [clojurewerkz.quartzite.triggers :as t]
             [clojurewerkz.quartzite.jobs :as j]
             [clojurewerkz.quartzite.conversion :as qc])
-  (:import [com.guokr.hebo Hebo])
   (:gen-class))
 
 
@@ -113,15 +112,6 @@
   (redis (car/sadd (str "end:" taskname) (join "-" params))))
 
 (defn start []
-  (try
-    (doto
-      (Hebo.)
-      (.run))
-    (catch Exception err 
-      (do
-        (error err)
-        (print-stack-trace err)
-        (print-stack-trace (root-cause err)))))
   (if-let [results (redis (car/hkeys "cron"))]
     (loop [tasknames results]
       (when (not (empty? tasknames))
