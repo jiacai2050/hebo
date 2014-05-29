@@ -54,6 +54,7 @@ Here %HADOOP_HOME% %HEBO_HOME% refer the root folder of your hadoop and hebo
     :param   [:year :month]
     :data    {:granularity :daily}
     :output  { :fs :hdfs :base "/path/to/output/of/B" :granularity :daily :delimiter "\t"}
+    :pretask A
     :query   (fn [fn-fgranu fn-dgranu timestamp source]
                 (<- 
                    [?hourly ?result]
